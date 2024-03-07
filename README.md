@@ -36,7 +36,7 @@ The following properties are available for the request body:
  kommentar                    | Comment, that can be displayed in the GUI                     | Optional                                                       
  antragsdokument              | The document to be uploaded                                   | Mandatory                                                      
  antragsdokument.fileName     | The document's file name                                      | Mandatory                                                      
- antragsdokument.fileContent  | The document's content as a byte array                        | Mandatory                                                      
+ antragsdokument.fileContent  | The document's content as a base64 encoded string                        | Mandatory                                                      
 
 The following HTTP headers will be expected:
 
