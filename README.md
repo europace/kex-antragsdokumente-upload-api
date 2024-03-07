@@ -29,12 +29,14 @@ https://www.europace2.de/kreditsmart/kex/antraege/dokumente
 
 The following properties are available for the request body:
 
- Request parameter            | Description                                                                            | Comment                                                        
-------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------------------
- antragsnummer                | Identifier of the application on the Europace2 platform                                | Mandatory if no **produktanbieterantragsnummer** is submitted. 
- produktanbieterantragsnummer | Identifier of the application to the relevant Produktanbieter                          | Mandatory if no **antragsnummer** is submitted.                
- kommentar                    | Comment, that can be displayed in the GUI                                              | Optional                                                       
- antragsdokument              | The document to be uploaded containing a filename and the file content as a byte array | Mandatory                                                      
+ Request parameter            | Description                                                   | Comment                                                        
+------------------------------|---------------------------------------------------------------|----------------------------------------------------------------
+ antragsnummer                | Identifier of the application on the Europace2 platform       | Mandatory if no **produktanbieterantragsnummer** is submitted. 
+ produktanbieterantragsnummer | Identifier of the application to the relevant Produktanbieter | Mandatory if no **antragsnummer** is submitted.                
+ kommentar                    | Comment, that can be displayed in the GUI                     | Optional                                                       
+ antragsdokument              | The document to be uploaded                                   | Mandatory                                                      
+ antragsdokument.fileName     | The document's file name                                      | Mandatory                                                      
+ antragsdokument.fileContent  | The document's content as a base64 encoded string             | Mandatory                                                      
 
 The following HTTP headers will be expected:
 
