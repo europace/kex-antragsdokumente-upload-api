@@ -68,7 +68,6 @@ The examples shown here can be used for testing by `curl` in the following way:
 
 ```sh
 curl -v -XPOST https://www.europace2.de/kreditsmart/kex/antraege/dokumente \
-	-H 'Accept: application/json' \
 	-H 'Content-Type: application/json' \
 	-H "Authorization: Bearer ${TOKEN}" \
 	-d "${REQUEST_BODY}"
