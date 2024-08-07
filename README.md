@@ -44,6 +44,7 @@ The following HTTP headers will be expected:
 ------------------|----------------------------------|-------------------------------------|
  Content-Type     | Content type of the request body | Always has to be `application/json` |
 
+The request body size must not exceed 10 MB.
 In case of success the API will respond with an HTTP status `201`.
 
 ## Authentication
@@ -57,10 +58,11 @@ the [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizier
 
 ## HTTP Status Errors
 
-| Error Code | Message      | Description                   |
-|------------|--------------|-------------------------------|
-| 401        | Unauthorized | Authentication failed         |
-| 403        | Forbidden    | The API client misses a scope |
+| Error Code | Message                  | Description                   |
+|------------|--------------------------|-------------------------------|
+| 401        | Unauthorized             | Authentication failed         |
+| 403        | Forbidden                | The API client misses a scope |
+| 413        | Request Entity Too Large | Request body is too large     |
 
 ## Examples
 
