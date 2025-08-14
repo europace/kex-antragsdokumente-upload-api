@@ -29,14 +29,15 @@ https://www.europace2.de/kreditsmart/kex/antraege/dokumente
 
 The following properties are available for the request body:
 
- Request parameter            | Description                                                   | Comment                                                        
-------------------------------|---------------------------------------------------------------|----------------------------------------------------------------
- antragsnummer                | Identifier of the application on the Europace2 platform       | Mandatory if no **produktanbieterantragsnummer** is submitted. 
- produktanbieterantragsnummer | Identifier of the application to the relevant Produktanbieter | Mandatory if no **antragsnummer** is submitted.                
- kommentar                    | Comment, that can be displayed in the GUI                     | Optional                                                       
- antragsdokument              | The document to be uploaded                                   | Mandatory                                                      
- antragsdokument.fileName     | The document's file name                                      | Mandatory                                                      
- antragsdokument.fileContent  | The document's content as a base64 encoded string             | Mandatory                                                      
+ Request parameter            | Description                                                   | Comment                                                        |
+------------------------------|---------------------------------------------------------------|----------------------------------------------------------------|
+ antragsnummer                | Identifier of the application on the Europace2 platform       | Mandatory if no **produktanbieterantragsnummer** is submitted. |
+ produktanbieterantragsnummer | Identifier of the application to the relevant Produktanbieter | Mandatory if no **antragsnummer** is submitted.                |
+ kommentar                    | Comment, that can be displayed in the GUI                     | Optional                                                       |
+ tags                         | List of tags describing features of the uploaded document     | Optional <br><br>allowed values:<li>**QES**</li>               |
+ antragsdokument              | The document to be uploaded                                   | Mandatory                                                      |
+ antragsdokument.fileName     | The document's file name                                      | Mandatory                                                      |
+ antragsdokument.fileContent  | The document's content as a base64 encoded string             | Mandatory                                                      |
 
 The following HTTP headers will be expected:
 
@@ -45,7 +46,8 @@ The following HTTP headers will be expected:
  Content-Type     | Content type of the request body | Always has to be `application/json` |
 
 The request body size must not exceed 10 MB.
-In case of success the API will respond with an HTTP status `201`.
+
+If the document already exists in the current application (with same name, comment and document hash), it will not be added again.
 
 ## Authentication
 
@@ -56,10 +58,11 @@ the [Authorization-API](https://docs.api.europace.de/privatkredit/authentifizier
 |-------------------------------|---------------------------------------|---------------------------|
 | privatkredit:antrag:schreiben | KreditSmart-Anträge anlegen/verändern | Scope for updating a case |
 
-## HTTP Status Errors
+## HTTP Status Codes
 
 | Error Code | Message                  | Description                   |
 |------------|--------------------------|-------------------------------|
+| 201        | Created                  | Request was successful        |
 | 401        | Unauthorized             | Authentication failed         |
 | 403        | Forbidden                | The API client misses a scope |
 | 413        | Request Entity Too Large | Request body is too large     |
@@ -91,11 +94,11 @@ The document for an application with the Produktanbieterantragsnummer `12919351`
 
 ### Adding a document with Antragsnummer
 
-Alternatively, the Antragsnummer can be transferred instead of the Produktanbieterantragsnummer:
+Alternatively, the Antragsnummer can be used instead of the Produktanbieterantragsnummer:
 
 ```json
 {
-  "antragsnummer": "985132/1/1",
+  "antragsnummer": "ABC123/1/1",
   "antragsdokument": {
     "fileName": "Kreditvertrag.pdf",
     "fileContent": "....."
@@ -105,11 +108,11 @@ Alternatively, the Antragsnummer can be transferred instead of the Produktanbiet
 
 ### Adding a document with comment
 
-Furthermore, the request can also contain a comment which is displayed to the users of **Kredit**Smart in addition to the actual document:
+The request can also contain a comment which is displayed to the users of **Kredit**Smart in addition to the actual document:
 
 ```json
 {
-  "produktanbieterantragsnummer": "12919351",
+  "antragsnummer": "ABC123/1/1",
   "kommentar": "Der Kreditvertrag wurde erstellt. Bitte prüfen und unterschreiben.",
   "antragsdokument": {
     "fileName": "Kreditvertrag.pdf",
@@ -118,7 +121,20 @@ Furthermore, the request can also contain a comment which is displayed to the us
 }
 ```
 
-If the document already exists in the current application by name, comment and document hash, it will not be added again.
+### Adding a document with tags
+
+The request can also contain a list of tags describing features of a document:
+
+```json
+{
+  "antragsnummer": "ABC123/1/1",
+  "tags": ["QES"],
+  "antragsdokument": {
+    "fileName": "Kreditvertrag.pdf",
+    "fileContent": "....."
+  }
+}
+```
 
 ## Terms of use
 
